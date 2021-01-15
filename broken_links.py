@@ -11,9 +11,10 @@ from bs4 import BeautifulSoup
 from urllib.parse import urlparse, urljoin
 import networkx as nx
 import pandas as pd
+from requests.exceptions import InvalidSchema
 
 # Get base links
-site = ''
+site = 'https://www.keen-ai.com'
 base = urlparse(site).netloc
 
 to_visit = [site]
@@ -33,7 +34,10 @@ while to_visit:
     # Updated the nodes dictionary
     current_node = nodes[l]
     url = urljoin(site, l)
-    r = requests.get(url)
+    try:
+        r = requests.get(url)
+    except InvalidSchema as e:
+        print(e)
     visited.append(l)
     responses.append(r.status_code)
 
@@ -97,4 +101,4 @@ while to_visit:
                     G.add_edge(current_node, m)
 
 outcome = dict(zip(visited, responses))
-nx.write_gexf(G, 'ng.gexf' % site)
+nx.write_gexf(G, 'ng.gexf')
