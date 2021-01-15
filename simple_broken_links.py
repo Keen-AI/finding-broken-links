@@ -96,3 +96,4 @@ with open('link_pairs.txt', 'w') as f:
 output.seek(0)
 link_pairs = pd.read_csv(output)
 final_df = link_pairs.merge(results, left_on='target', right_on='URL')
+final_df.to_csv('link_analysis.csv')
