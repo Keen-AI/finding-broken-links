@@ -15,7 +15,7 @@ import csv
 from sys import argv
 
 # Get base links
-if argv[1]:
+if len(argv) > 1:
     site = argv[1]
 else:
     site = 'https://example.com'
